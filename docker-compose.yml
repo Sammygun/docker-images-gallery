@@ -2,13 +2,25 @@ version:'3'
 #версия docker-compose.yml
 services:
   frontend:
+    restart: always  # !!!далаем чтоб приложение рестартовалось автоматом
     build: ./frontend
 #Указываем где находится Dockerfile так же в данной   директории находится docker-compose.yml
 #/home/sam/Educ/dock_kub/images-gallery/frontend поэтому ./frontend
     ports:
-      -'3000:3000'
+      - '3000:3000'
+    volumes:
+      - /app/node_modules
+# указываем исключение то что внутри контейнера в директории app не будет меняться
+      - ./frontend:/app
+# теперь все изменения в директории frontend отобразятся в директории контейнера app
+    environment:
+      - CHOKIDAR_USEPOLLING=true      
+# добавляем переменную которая позволииит применять изменения на лету        
   api:
+    restart: always  #!!!далаем чтоб приложение рестартовалось автоматом
     build: ./api
     ports:
       -'5050:5050'
-
+    volumes:
+      - ./api:/app
+# теперь и для backend добавим директорию также 
