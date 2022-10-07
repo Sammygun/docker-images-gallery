@@ -1,0 +1,14 @@
+version:'3'
+#версия docker-compose.yml
+services:
+  frontend:
+    build: ./frontend
+#Указываем где находится Dockerfile так же в данной   директории находится docker-compose.yml
+#/home/sam/Educ/dock_kub/images-gallery/frontend поэтому ./frontend
+    ports:
+      -'3000:3000'
+  api:
+    build: ./api
+    ports:
+      -'5050:5050'
+
